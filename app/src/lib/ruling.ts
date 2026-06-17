@@ -67,24 +67,82 @@ export class MockRuler implements Ruler {
 }
 
 /**
- * The REAL 0G Compute ruler — IMPLEMENTATION SKETCH, gated on a funded ledger.
- * Uncomment + wire once wallet >= 3 OG. Call shapes confirmed by the spike.
+ * CHEAP REAL RULER — any OpenAI-compatible LLM via an API key.
  *
- *   import { createZGComputeNetworkBroker } from "@0gfoundation/0g-compute-ts-sdk";
- *   import { ethers } from "ethers";
- *   import OpenAI from "openai";
+ * The verified 0G Compute path needs a funded ledger (3 OG, contract-enforced,
+ * refundable). To get REAL, intelligent verdicts WITHOUT that — for ~cents, or
+ * free on Groq/OpenRouter free tiers — set in .env.local:
+ *   LLM_API_KEY=...            (required to enable this path)
+ *   LLM_BASE_URL=https://api.openai.com/v1   (or groq / openrouter / local)
+ *   LLM_MODEL=gpt-4o-mini      (any chat model the endpoint serves)
  *
- *   const wallet = new ethers.Wallet(process.env.PRIVATE_KEY!, provider);
+ * HONESTY: this is the demo ruling path. It is NOT the 0G verified-inference
+ * network — so it carries no TEE attestation over its output. The live
+ * AttestationPanel separately proves the 0G serving stack is real; it does not
+ * claim to cover a verdict produced here. Never imply otherwise (SPEC §3).
+ * Any failure (network / bad JSON) falls back to the offline mock so the demo
+ * never breaks.
+ */
+export class LLMRuler implements Ruler {
+  async rule(input: CaseInput): Promise<VerdictResult> {
+    try {
+      // Plain fetch to the OpenAI-compatible /chat/completions endpoint — no SDK
+      // dependency, works with OpenAI / Groq / OpenRouter / local servers alike.
+      const baseURL = (process.env.LLM_BASE_URL || "https://api.openai.com/v1").replace(/\/$/, "");
+      const res = await fetch(`${baseURL}/chat/completions`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.LLM_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: process.env.LLM_MODEL || "gpt-4o-mini",
+          messages: [{ role: "user", content: buildPrompt(input) }],
+          temperature: 0,
+          response_format: { type: "json_object" },
+        }),
+      });
+      if (!res.ok) throw new Error(`LLM ${res.status}`);
+      const data = await res.json();
+      const raw: string = data?.choices?.[0]?.message?.content ?? "";
+      const json = raw.slice(raw.indexOf("{"), raw.lastIndexOf("}") + 1);
+      const p = JSON.parse(json) as Partial<VerdictResult>;
+      if (!p.reasoning) throw new Error("no reasoning in model output");
+      const winner: "A" | "B" = p.winner === "B" ? "B" : "A";
+      const confidence = Math.max(0, Math.min(1, Number(p.confidence) || 0.5));
+      return {
+        winner,
+        confidence: Number(confidence.toFixed(2)),
+        reasoning: String(p.reasoning),
+        citation: String(p.citation ?? "—"),
+      };
+    } catch {
+      // never break the demo — fall back to the deterministic offline ruling
+      return new MockRuler().rule(input);
+    }
+  }
+}
+
+/**
+ * The REAL 0G Compute (verified-inference) ruler — gated on a funded ledger
+ * (3 OG, contract-enforced). Call shapes confirmed by the spike:
  *   const broker = await createZGComputeNetworkBroker(wallet);
  *   await broker.inference.acknowledgeProviderSigner(provider);
- *   const meta = await broker.inference.getServiceMetadata(provider);   // {endpoint, model}
+ *   const meta = await broker.inference.getServiceMetadata(provider);
  *   const headers = await broker.inference.getRequestHeaders(provider, prompt);
  *   const openai = new OpenAI({ baseURL: meta.endpoint, apiKey: "", defaultHeaders: headers });
- *   const completion = await openai.chat.completions.create({ model: meta.model, messages: [...], temperature: 0 });
- *   await broker.inference.processResponse(provider, answer, completion.id); // signature check
- *
- * For now we always return the mock.
+ *   const completion = await openai.chat.completions.create({ model: meta.model, messages, temperature: 0 });
+ *   await broker.inference.processResponse(provider, answer, completion.id);
+ * Drops in behind this same interface once the ledger is funded.
+ */
+
+/**
+ * Picks the best available ruler — NO funded 0G ledger required to demo:
+ *   1. LLM_API_KEY set  → real, cheap LLM verdicts (demo ruling).
+ *   2. otherwise        → deterministic offline mock (zero config, free).
+ * The verified 0G Compute path slots in at tier 0 once a ledger is funded.
  */
 export function getRuler(): Ruler {
+  if (process.env.LLM_API_KEY) return new LLMRuler();
   return new MockRuler();
 }

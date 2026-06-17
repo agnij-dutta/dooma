@@ -1,0 +1,17 @@
+{
+  "name": "verdict-spike",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Day-1 de-risk spike: prove 0G verifiable inference works and inspect what attestation is exportable.",
+  "scripts": {
+    "spike": "node spike.mjs"
+  },
+  "dependencies": {
+    "@0gfoundation/0g-compute-ts-sdk": "^0.8.4",
+    "@0glabs/0g-serving-broker": "^0.4.0",
+    "dotenv": "^16.4.5",
+    "ethers": "^6.13.0",
+    "openai": "^4.67.0"
+  }
+}

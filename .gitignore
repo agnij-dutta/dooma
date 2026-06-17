@@ -1,0 +1,23 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+.vercel/
+
+# env / secrets (throwaway testnet keys live here — never commit)
+.env
+.env.local
+.env*.local
+spike/.env
+
+# foundry
+contracts/out/
+contracts/cache/
+broker_attestation_report.json
+
+# misc
+.DS_Store
+*.log
+*.tsbuildinfo

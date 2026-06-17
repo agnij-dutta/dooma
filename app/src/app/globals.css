@@ -1,0 +1,547 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================================
+   VERDICT — "NIGHT COURT" design system
+   A crypto-native judicial tribunal: courtroom-at-night gravitas crossed with
+   a prediction-market terminal. Dominant warm ink + sharp brass-gold accents.
+   ========================================================================== */
+
+:root {
+  /* ---- Palette: ink base -------------------------------------------------- */
+  --ink: 11 11 13;          /* #0B0B0D  warm near-black, primary canvas       */
+  --ink-700: 18 18 21;      /* #121215  raised surfaces (cards, panels)        */
+  --ink-600: 26 25 29;      /* #1A191D  hover / inset                          */
+  --ink-500: 38 36 41;      /* #262429  borders, dividers (filled)             */
+  --ink-400: 58 55 62;      /* #3A373E  hairline borders                       */
+
+  /* ---- Palette: judicial brass / gold (the scales & gavel) ---------------- */
+  --gold: 201 162 77;       /* #C9A24D  primary brass — refined, less neon     */
+  --gold-bright: 226 191 105;/* #E2BF69 highlight / hover                      */
+  --gold-deep: 138 105 38;  /* #8A6926  shadow / engraved edge                 */
+  --gold-soft: 201 162 77;  /* used at low alpha for glows                     */
+
+  /* ---- Palette: parchment / bone (light text & document surfaces) --------- */
+  --bone: 237 230 215;      /* #EDE6D7  primary light text                     */
+  --bone-dim: 178 170 154;  /* #B2AA9A  secondary text                         */
+  --bone-faint: 120 114 102;/* #787266  tertiary / captions                    */
+  --parchment: 232 224 205; /* #E8E0CD  document / card surfaces (light)       */
+
+  /* ---- Palette: verdict outcomes ------------------------------------------ */
+  --verdict: 74 167 110;    /* #4AA76E  winner green (muted, judicial)         */
+  --verdict-bright: 110 201 145;/* #6EC991 winner highlight                    */
+  --oxblood: 168 58 64;     /* #A83A40  struck loser — oxblood/rose            */
+  --oxblood-bright: 201 92 99;/* #C95C63 loser highlight                       */
+
+  /* ---- Palette: courtroom leather (deep burgundy secondary) --------------- */
+  --leather: 58 26 30;      /* #3A1A1E  deep burgundy secondary surface        */
+  --leather-edge: 92 44 49; /* #5C2C31  burgundy hairline                      */
+
+  /* ---- Semantic aliases --------------------------------------------------- */
+  --bg: var(--ink);
+  --surface: var(--ink-700);
+  --border: var(--ink-400);
+  --text: var(--bone);
+  --text-dim: var(--bone-dim);
+  --accent: var(--gold);
+
+  /* ---- Radii -------------------------------------------------------------- */
+  --radius-xs: 4px;
+  --radius-sm: 7px;
+  --radius-md: 11px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-seal: 9999px;
+
+  /* ---- Shadows / elevation (warm, never pure black) ----------------------- */
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 6px 20px -6px rgb(0 0 0 / 0.55);
+  --shadow-lg: 0 18px 50px -12px rgb(0 0 0 / 0.7);
+  --shadow-gold: 0 0 0 1px rgb(var(--gold) / 0.25), 0 8px 30px -8px rgb(var(--gold) / 0.25);
+  --shadow-inset: inset 0 1px 0 0 rgb(255 255 255 / 0.04);
+
+  /* ---- Motion ------------------------------------------------------------- */
+  --ease-court: cubic-bezier(0.22, 1, 0.36, 1);
+  --t-fast: 140ms;
+  --t-normal: 260ms;
+  --t-slow: 520ms;
+
+  --font-display: var(--font-instrument-serif), Georgia, "Times New Roman", serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ============================================================================
+   BASE TYPOGRAPHY
+   ========================================================================== */
+* {
+  border-color: rgb(var(--ink-400));
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: rgb(var(--ink));
+  color: rgb(var(--bone));
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv01";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+  position: relative;
+}
+
+::selection {
+  background-color: rgb(var(--gold) / 0.3);
+  color: rgb(var(--bone));
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.04;
+}
+
+.text-balance { text-wrap: balance; }
+.text-pretty { text-wrap: pretty; }
+
+/* Focus ring — gold, accessible, never removed */
+:where(a, button, [role="button"], input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid rgb(var(--gold-bright));
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+/* ============================================================================
+   ATMOSPHERE — grain + spotlight (depth, not flat backgrounds)
+   ========================================================================== */
+
+/* Fine film-grain / noise overlay. Applied to <body> via .grain.
+   SVG fractal-noise turbulence, fixed, multiply-ish, very subtle.            */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* Top vignette tying the gold spotlight to the page head */
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgb(var(--gold) / 0.10), transparent 55%),
+    radial-gradient(100% 100% at 50% 120%, rgb(var(--leather) / 0.35), transparent 60%);
+}
+
+/* Courtroom-spotlight radial vignette — wrap hero content in .spotlight */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+.spotlight::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -10%;
+  width: min(900px, 120%);
+  height: 120%;
+  transform: translateX(-50%);
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 50% 45% at 50% 30%,
+    rgb(var(--gold) / 0.16),
+    rgb(var(--gold) / 0.05) 40%,
+    transparent 70%
+  );
+  filter: blur(8px);
+}
+
+/* ============================================================================
+   GOLD RULES & ENGRAVING
+   ========================================================================== */
+
+/* Hairline gold rule — a horizontal divider with engraved gradient */
+.gold-rule {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(var(--gold) / 0.55) 50%,
+    transparent
+  );
+}
+.gold-rule--strong {
+  background: linear-gradient(90deg, transparent, rgb(var(--gold) / 0.9) 50%, transparent);
+}
+
+/* Engraved / embossed text — looks pressed into the surface */
+.embossed {
+  color: rgb(var(--gold-bright));
+  text-shadow:
+    0 1px 0 rgb(0 0 0 / 0.6),
+    0 -1px 0 rgb(var(--gold) / 0.15);
+}
+.engraved {
+  color: rgb(var(--bone-dim));
+  text-shadow: 0 1px 0 rgb(255 255 255 / 0.05);
+}
+
+/* A hairline gold frame for ceremonial containers */
+.gold-frame {
+  box-shadow:
+    inset 0 0 0 1px rgb(var(--gold) / 0.28),
+    var(--shadow-md);
+}
+
+/* Eyebrow / kicker label — small mono uppercase with gold tick */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgb(var(--gold-bright));
+}
+
+/* ============================================================================
+   STAMP — rubber-stamp label (VERDICT / SETTLED / IN SESSION / VERIFIED)
+   ========================================================================== */
+.stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-family: var(--font-display);
+  font-style: italic;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.18em 0.7em;
+  border: 2px solid currentColor;
+  border-radius: var(--radius-xs);
+  transform: rotate(-4deg);
+  opacity: 0.92;
+  /* slightly distressed ink look */
+  mix-blend-mode: screen;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='40'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.4 1.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' fill='%23fff'/%3E%3Crect width='100%25' height='100%25' filter='url(%23r)'/%3E%3C/svg%3E");
+  -webkit-mask-size: 100% 100%;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='40'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.4 1.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' fill='%23fff'/%3E%3Crect width='100%25' height='100%25' filter='url(%23r)'/%3E%3C/svg%3E");
+  mask-size: 100% 100%;
+}
+.stamp--gold   { color: rgb(var(--gold-bright)); }
+.stamp--verdict{ color: rgb(var(--verdict-bright)); }
+.stamp--oxblood{ color: rgb(var(--oxblood-bright)); }
+.stamp--bone   { color: rgb(var(--bone)); }
+
+/* ============================================================================
+   SEAL — the wax-seal "Verified by TEE" proof badge
+   ========================================================================== */
+.seal {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: var(--radius-seal);
+  color: rgb(var(--bone));
+  /* molten wax: radial highlight + ridged rim */
+  background:
+    radial-gradient(circle at 38% 30%, rgb(var(--oxblood-bright) / 0.9), rgb(var(--oxblood)) 45%, rgb(var(--leather)) 100%);
+  box-shadow:
+    inset 0 2px 4px rgb(255 255 255 / 0.25),
+    inset 0 -4px 8px rgb(0 0 0 / 0.45),
+    0 4px 14px -2px rgb(0 0 0 / 0.6);
+  text-shadow: 0 1px 1px rgb(0 0 0 / 0.5);
+  isolation: isolate;
+}
+/* ridged scalloped rim */
+.seal::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: var(--radius-seal);
+  background: repeating-conic-gradient(
+    rgb(var(--oxblood) / 0.0) 0deg 8deg,
+    rgb(var(--leather) / 0.85) 8deg 16deg
+  );
+  z-index: -1;
+}
+/* engraved inner ring */
+.seal::after {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border-radius: var(--radius-seal);
+  border: 1px dashed rgb(var(--bone) / 0.4);
+}
+.seal--verified {
+  background:
+    radial-gradient(circle at 38% 30%, rgb(var(--gold-bright)), rgb(var(--gold)) 45%, rgb(var(--gold-deep)) 100%);
+  color: rgb(var(--ink));
+}
+.seal--verified::before {
+  background: repeating-conic-gradient(
+    rgb(var(--gold) / 0.0) 0deg 8deg,
+    rgb(var(--gold-deep) / 0.9) 8deg 16deg
+  );
+}
+.seal--verified::after {
+  border-color: rgb(var(--ink) / 0.45);
+}
+
+/* ============================================================================
+   THE GAVEL DROP — signature reveal (CSS fallback; framer-motion preferred)
+   ========================================================================== */
+@keyframes gavel-stamp-in {
+  0%   { opacity: 0; transform: scale(2.4) rotate(-14deg); filter: blur(3px); }
+  60%  { opacity: 1; transform: scale(0.92) rotate(-4deg); filter: blur(0); }
+  78%  { transform: scale(1.04) rotate(-4deg); }
+  100% { opacity: 0.92; transform: scale(1) rotate(-4deg); }
+}
+.gavel-drop {
+  animation: gavel-stamp-in 620ms var(--ease-court) both;
+}
+@keyframes seal-press {
+  0%   { opacity: 0; transform: scale(1.8); }
+  70%  { opacity: 1; transform: scale(0.94); }
+  100% { transform: scale(1); }
+}
+
+/* ============================================================================
+   UTILITY: paper/leather surfaces
+   ========================================================================== */
+.surface-leather {
+  background:
+    linear-gradient(rgb(var(--leather) / 0.6), rgb(var(--leather) / 0.35)),
+    rgb(var(--ink-700));
+  border: 1px solid rgb(var(--leather-edge) / 0.6);
+}
+.surface-docket {
+  background:
+    linear-gradient(180deg, rgb(var(--ink-700)), rgb(var(--ink) / 0.6));
+}
+
+/* ============================================================================
+   REVEAL — staggered entrance (use inline animation-delay to orchestrate)
+   ========================================================================== */
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  animation: reveal-up 620ms var(--ease-court) both;
+}
+
+/* ============================================================================
+   MARQUEE — the live verdict ticker
+   ========================================================================== */
+.marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee-track {
+  display: inline-block;
+  animation: marquee-scroll 38s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ============================================================================
+   ACT STRUCTURE — labels, dividers, and section rhythm
+   Each act of the proceeding is unmistakably separated.
+   ========================================================================== */
+
+/* Big roman-numeral act marker — looks engraved into the page margin */
+.act-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgb(var(--gold-bright));
+}
+.act-label::before {
+  content: "";
+  width: 2rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(var(--gold) / 0.9));
+}
+.act-numeral {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: rgb(var(--gold) / 0.55);
+  text-shadow: 0 1px 0 rgb(0 0 0 / 0.6);
+}
+
+/* Ceremonial divider between acts — a centered ⚖ on a gold rule */
+.act-divider {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  color: rgb(var(--gold) / 0.65);
+}
+.act-divider::before,
+.act-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(var(--gold) / 0.5), transparent);
+}
+.act-divider__mark {
+  font-size: 1.1rem;
+  filter: drop-shadow(0 1px 0 rgb(0 0 0 / 0.6));
+}
+
+/* ============================================================================
+   COURTHOUSE PEDIMENT — atmospheric columns + pediment behind the hero
+   Pure CSS architecture: a faint classical facade rising from the floor.
+   ========================================================================== */
+.pediment {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 60%, transparent 95%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 60%, transparent 95%);
+}
+/* the columns — repeating engraved verticals */
+.pediment__cols {
+  position: absolute;
+  left: 50%;
+  top: 14%;
+  width: min(760px, 86%);
+  height: 86%;
+  transform: translateX(-50%);
+  opacity: 0.5;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 46px,
+      rgb(var(--gold) / 0.07) 46px 48px,
+      rgb(var(--gold) / 0.12) 48px 50px,
+      rgb(var(--gold) / 0.07) 50px 52px,
+      transparent 52px 98px
+    );
+  -webkit-mask-image: radial-gradient(60% 100% at 50% 0%, #000, transparent 78%);
+  mask-image: radial-gradient(60% 100% at 50% 0%, #000, transparent 78%);
+}
+/* the pediment triangle on top of the columns */
+.pediment__roof {
+  position: absolute;
+  left: 50%;
+  top: 4%;
+  width: min(820px, 92%);
+  height: 130px;
+  transform: translateX(-50%);
+  opacity: 0.45;
+  background: linear-gradient(180deg, rgb(var(--gold) / 0.14), transparent);
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000, transparent);
+  mask-image: linear-gradient(180deg, #000, transparent);
+}
+
+/* Giant embossed scales watermark behind the hero headline */
+.scales-watermark {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  pointer-events: none;
+  font-family: var(--font-display);
+  font-size: clamp(20rem, 48vw, 42rem);
+  line-height: 1;
+  color: rgb(var(--gold) / 0.05);
+  text-shadow:
+    0 2px 1px rgb(0 0 0 / 0.5),
+    0 -1px 0 rgb(var(--gold) / 0.04);
+  user-select: none;
+}
+
+/* ============================================================================
+   KINETIC GAVEL — a strike that punctuates the hero
+   ========================================================================== */
+@keyframes gavel-swing {
+  0%   { transform: rotate(-38deg); }
+  55%  { transform: rotate(-38deg); }
+  72%  { transform: rotate(6deg); }
+  82%  { transform: rotate(-3deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes gavel-flash {
+  0%, 70%  { opacity: 0; transform: scale(0.4); }
+  74%      { opacity: 0.9; transform: scale(1); }
+  100%     { opacity: 0; transform: scale(1.8); }
+}
+
+/* ============================================================================
+   DOCKET TAPE — the live record, a richer marquee
+   ========================================================================== */
+.tape {
+  position: relative;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.tape-track {
+  display: inline-flex;
+  align-items: stretch;
+  animation: marquee-scroll 54s linear infinite;
+  will-change: transform;
+}
+.tape:hover .tape-track {
+  animation-play-state: paused;
+}
+.tape-chip {
+  border-left: 1px solid rgb(var(--ink-400));
+}
+
+/* pulsing live dot oxblood→gold */
+@keyframes live-pulse {
+  0%, 100% { color: rgb(var(--oxblood-bright)); box-shadow: 0 0 0 0 rgb(var(--oxblood) / 0.5); }
+  50%      { color: rgb(var(--gold-bright)); box-shadow: 0 0 0 5px rgb(var(--gold) / 0); }
+}
+.live-dot {
+  display: inline-block;
+  width: 0.55em;
+  height: 0.55em;
+  border-radius: 9999px;
+  background: currentColor;
+  animation: live-pulse 1.8s var(--ease-court) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .gavel-drop { animation: none; opacity: 1; transform: rotate(-4deg); }
+  .reveal { animation: none; opacity: 1; transform: none; }
+  .marquee-track, .tape-track { animation: none; }
+  .live-dot { animation: none; }
+}

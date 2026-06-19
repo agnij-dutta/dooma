@@ -21,3 +21,6 @@ broker_attestation_report.json
 .DS_Store
 *.log
 *.tsbuildinfo
+
+# runtime case store (reseeded from SEED in store.ts)
+app/data/cases.json

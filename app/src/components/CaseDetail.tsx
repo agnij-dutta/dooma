@@ -1,14 +1,23 @@
 "use client";
 
 import { useState } from "react";
+import { useAccount } from "wagmi";
 import type { Case } from "@/lib/types";
 import { AttestationPanel } from "./AttestationPanel";
-import { Button, Stamp, VoteBar } from "@/components/ui";
+import { OnChainPanel } from "./OnChainPanel";
+import { Button, ButtonLink, Stamp, VoteBar } from "@/components/ui";
 
 export function CaseDetail({ initial }: { initial: Case }) {
   const [c, setC] = useState<Case>(initial);
   const [busy, setBusy] = useState(false);
   const [copied, setCopied] = useState(false);
+  const { address, isConnected } = useAccount();
+
+  const isSummonedOpponent =
+    isConnected &&
+    !!c.opponentAddress &&
+    address?.toLowerCase() === c.opponentAddress.toLowerCase();
+  const showAcceptCta = c.status === "open" && c.onchainId !== undefined && isSummonedOpponent;
 
   async function castVote(side: "A" | "B") {
     const res = await fetch("/api/cases/vote", {
@@ -74,6 +83,19 @@ export function CaseDetail({ initial }: { initial: Case }) {
           </div>
         </div>
 
+        {/* ---- Accept CTA (only the summoned opponent, while open) ---- */}
+        {showAcceptCta && (
+          <div className="gold-frame surface-leather rounded-xl p-5 text-center">
+            <p className="font-display text-xl text-bone">You&apos;ve been summoned to this case.</p>
+            <p className="mt-1 font-sans text-sm text-bone-dim">
+              Match <span className="font-mono text-gold-bright">{c.stake} OG</span> to enter the arena.
+            </p>
+            <ButtonLink href={`/challenge/${c.id}`} size="lg" className="mt-4">
+              Accept &amp; match {c.stake} OG
+            </ButtonLink>
+          </div>
+        )}
+
         {/* ---- Crowd takes a side ---- */}
         <div className="surface-docket rounded-xl border border-ink-400 p-6">
           <h2 className="mb-4 font-mono text-[0.7rem] uppercase tracking-[0.18em] text-bone-dim">
@@ -135,6 +157,7 @@ export function CaseDetail({ initial }: { initial: Case }) {
 
       {/* ---- Sidebar: the wax-sealed certificate ---- */}
       <div className="space-y-4">
+        <OnChainPanel c={c} />
         <AttestationPanel provider={c.provider} />
         <div className="rounded-xl border border-ink-400 surface-docket p-4 font-mono text-[0.72rem] leading-relaxed text-bone-faint">
           <div className="mb-1 uppercase tracking-widest text-bone-dim">Verdict Card</div>

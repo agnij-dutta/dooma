@@ -29,6 +29,12 @@ export async function POST(req: Request) {
     evidenceB: body.evidenceB,
     stake: body.stake,
     provider: typeof body.provider === "string" ? body.provider : DEFAULT_PROVIDER,
+    // optional on-chain linkage — present only when filed with a live escrow tx
+    onchainId: typeof body.onchainId === "number" ? body.onchainId : undefined,
+    claimHash: typeof body.claimHash === "string" ? body.claimHash : undefined,
+    creatorAddress: typeof body.creatorAddress === "string" ? body.creatorAddress : undefined,
+    opponentAddress: typeof body.opponentAddress === "string" ? body.opponentAddress : undefined,
+    txCreate: typeof body.txCreate === "string" ? body.txCreate : undefined,
   });
   return NextResponse.json(c, { status: 201 });
 }

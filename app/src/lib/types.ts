@@ -34,6 +34,22 @@ export interface Case {
   /** which party won, denormalized for the card */
   winnerLabel?: string;
   loserLabel?: string;
+
+  // --- on-chain linkage (hybrid: store holds content+votes, Escrow holds money) ---
+  /** the Escrow contract case id this case is bound to (undefined = legacy/off-chain) */
+  onchainId?: number;
+  /** keccak256(question|criterion|evidenceA|evidenceB) committed on-chain */
+  claimHash?: string;
+  /** creator (Party A) wallet address — winner payout target if A wins */
+  creatorAddress?: string;
+  /** opponent (Party B) wallet address — the only address allowed to accept */
+  opponentAddress?: string;
+  /** tx hash of createCase */
+  txCreate?: string;
+  /** tx hash of acceptCase */
+  txAccept?: string;
+  /** tx hash of the resolver's resolve() */
+  txResolve?: string;
 }
 
 export interface AttestationSummary {

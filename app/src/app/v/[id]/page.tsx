@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 
 export function generateMetadata({ params }: { params: { id: string } }): Metadata {
   const c = getCase(params.id);
-  if (!c) return { title: "VERDICT" };
+  if (!c) return { title: "DOOMA" };
   const title = c.status === "decided" ? `⚖️ ${c.winnerLabel} wins — ${c.title}` : `⚖️ ${c.title}`;
   // OG image is the colocated opengraph-image route; Next wires it automatically.
   return {

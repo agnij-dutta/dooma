@@ -28,11 +28,11 @@ const hanken = Hanken_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "VERDICT — Settle It On-Chain",
+  title: "DOOMA — Settle It On-Chain",
   description:
     "A public AI courtroom on 0G. Two people, one AI judge that can't be bribed, the money's already locked. Every verdict is served by a cryptographically verified TEE serving stack — inspect the proof yourself.",
   openGraph: {
-    title: "VERDICT — Settle It On-Chain",
+    title: "DOOMA — Settle It On-Chain",
     description:
       "A public AI courtroom on 0G. Pick a side before the gavel drops.",
     type: "website",

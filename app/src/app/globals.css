@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* ============================================================================
-   VERDICT — "NIGHT COURT" design system
+   DOOMA — "NIGHT COURT" design system
    A crypto-native judicial tribunal: courtroom-at-night gravitas crossed with
    a prediction-market terminal. Dominant warm ink + sharp brass-gold accents.
    ========================================================================== */
@@ -219,7 +219,7 @@ h1, h2, h3, h4, .font-display {
 }
 
 /* ============================================================================
-   STAMP — rubber-stamp label (VERDICT / SETTLED / IN SESSION / VERIFIED)
+   STAMP — rubber-stamp label (DOOMA / SETTLED / IN SESSION / VERIFIED)
    ========================================================================== */
 .stamp {
   display: inline-flex;

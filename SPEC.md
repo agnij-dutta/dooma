@@ -1,12 +1,12 @@
-# VERDICT — a public AI courtroom on 0G ("Settle It On-Chain")
+# DOOMA — a public AI courtroom on 0G ("Settle It On-Chain")
 
 > **For:** The Zero Cup (0G global vibe-coding tournament). Submission deadline tight (~8 days from 2026-06-15). Knockout format: judges decide Top 32→8, then **community voting** opens at Top 8 and crowns the champion. The build must impress technical judges early AND be viral/shareable late. **Goal: a fair, probable shot at winning the cup — not just placing.** Strategy: honest, working 0G core for the judges (§1–3) + a crowd-spectacle virality engine (§4) + a mobilization plan (§4b).
 
 **Tagline:** *"Two people. One AI judge that can't be bribed. The money's already locked. Pick a side before the gavel drops."*
 
-Short tagline / brand: **"Settle It On-Chain."** (VERDICT is the name — it's a brand and a verb; keep it.)
+Short tagline / brand: **"Settle It On-Chain."** (DOOMA is the name — it's a brand and a verb; keep it.)
 
-> **⭐ CONCEPT EVOLVED 2026-06-16 — championship reframe.** The core insight: base VERDICT only gives skin in the game to the *two disputants*. The cup is won by giving the **crowd around the ring** skin in the game too — opinions, stakes, status, and a verifiable trophy to post about. So the unit of engagement changes from "private 2-party escrow" to **a PUBLIC AI courtroom the whole internet watches, picks sides on, and collects the receipt from.** The honest 0G core (escrow + TEE-attested verdict + auto-payout + public proof) is unchanged; we wrap it in a spectacle + virality engine (§4) and a mobilization plan (§4b).
+> **⭐ CONCEPT EVOLVED 2026-06-16 — championship reframe.** The core insight: base DOOMA only gives skin in the game to the *two disputants*. The cup is won by giving the **crowd around the ring** skin in the game too — opinions, stakes, status, and a verifiable trophy to post about. So the unit of engagement changes from "private 2-party escrow" to **a PUBLIC AI courtroom the whole internet watches, picks sides on, and collects the receipt from.** The honest 0G core (escrow + TEE-attested verdict + auto-payout + public proof) is unchanged; we wrap it in a spectacle + virality engine (§4) and a mobilization plan (§4b).
 
 ---
 
@@ -16,8 +16,8 @@ Anyone can **file a case**: a dispute or bet, with funds escrowed on **0G Chain*
 
 **Why this dies on AWS+OpenAI:** the loser's first instinct is *"you rigged the AI."* The verdict is served by a genuine, cryptographically attested TEE whose remote-attestation report anyone can independently verify out-of-band (see §3 — and the honesty boundary: today we prove a *verified serving stack*, with the model-output binding on the roadmap). The unbribeable judge is the product's spine *and* the spectacle's credibility.
 
-### Viral drivers it now has (base VERDICT lacked all but stakes)
-| Driver | How VERDICT delivers it |
+### Viral drivers it now has (base DOOMA lacked all but stakes)
+| Driver | How DOOMA delivers it |
 |---|---|
 | **Taking sides** | Public cases everyone has an opinion on; one-click "who's right?" |
 | **Skin in the game** | Disputants escrow; spectators optionally stake — the crowd has stakes too |
@@ -42,7 +42,7 @@ Anyone can **file a case**: a dispute or bet, with funds escrowed on **0G Chain*
 5. **THE GAVEL DROPS (AI RULING)** — Backend builds a FIXED, templated prompt: system rubric + question + both evidence blobs (verbatim, attributed) + required JSON `{winner, confidence, reasoning, citation}`. Calls **0G Compute** on the TEE-attested provider; runs `verifyService()` to capture the attestation. *[off-chain orchestration; inference served in attested TEE]*
 6. **PROOF PUBLISHED** — Capture full prompt, raw output, the provider attestation report + public RA URL, and verification result. Bundle → 0G Storage. Root hash + winner + outputHash written on-chain. *[bundle→Storage, result→ON-CHAIN]*
 7. **AUTO-PAYOUT** — `Escrow.resolve(disputeId, winner, proofRoot)` releases the pot to the winner minus a small protocol fee; correct crowd-predictors climb the leaderboard / split the side-pool. *[ON-CHAIN]*
-8. **THE VERDICT CARD** — every case mints a spicy, shareable card at `/v/{disputeId}`: WINNER vs ~~loser~~, the ruling quote, stake, and a **"✓ Verified by TEE · tap to inspect proof"** badge linking to the live attestation. Auto OG-image for X/Telegram/Discord/Farcaster. *[off-chain page over on-chain + Storage]*
+8. **THE DOOMA CARD** — every case mints a spicy, shareable card at `/v/{disputeId}`: WINNER vs ~~loser~~, the ruling quote, stake, and a **"✓ Verified by TEE · tap to inspect proof"** badge linking to the live attestation. Auto OG-image for X/Telegram/Discord/Farcaster. *[off-chain page over on-chain + Storage]*
 
 **On-chain:** escrow + stakes, dispute metadata hashes, model ID, evidence root, final verdict (winner + outputHash + proofRoot), payout.
 **Off-chain:** UI, prompt assembly, inference call (executes in 0G TEE), bundling.
@@ -85,7 +85,7 @@ Anyone can **file a case**: a dispute or bet, with funds escrowed on **0G Chain*
 **Judge demo (90-sec kill shot):** a public case with stakes escrowed → crowd has taken sides in the Arena → hit **Drop the Gavel** → AI returns verdict + cited reasoning → pot auto-pays the winner on-chain in real time → click the **"✓ Verified by TEE"** badge → *"The loser will say we rigged this. They can't — this verdict was served by a genuine Intel TDX enclave; here's the remote-attestation report, and you can verify it yourself right now with the open-source dstack verifier. We didn't swap the stack, didn't forge the answer in transit, and the inputs were committed on-chain before the AI ever saw them."* → **then volunteer the caveat**: *"Today the model runs centralized behind that verified enclave — so what's cryptographically proven is the serving stack and request integrity. The moment 0G lists an LLM-in-TEE provider, the last gap closes with zero app changes. We're the team that read the 501."* Honesty + a live, clickable proof beats a hand-waved overclaim.
 
 ### The virality engine (priority-ordered — this wins the vote phase)
-1. **The Verdict Card** *(keystone — build first, never cut)* — dynamic OG image (`@vercel/og` / `ImageResponse`): "⚖️ VERDICT" + case title; **WINNER** vs ~~loser~~ (strikethrough = schadenfreude); the one-sentence ruling quote; stake; footer badge **"✓ Verified by TEE · tap to inspect proof"** → live attestation URL. Unfurls beautifully in X/TG/Discord. Make it *spicy by default*. The badge is what stops it looking like a meme generator.
+1. **The Verdict Card** *(keystone — build first, never cut)* — dynamic OG image (`@vercel/og` / `ImageResponse`): "⚖️ DOOMA" + case title; **WINNER** vs ~~loser~~ (strikethrough = schadenfreude); the one-sentence ruling quote; stake; footer badge **"✓ Verified by TEE · tap to inspect proof"** → live attestation URL. Unfurls beautifully in X/TG/Discord. Make it *spicy by default*. The badge is what stops it looking like a meme generator.
 2. **Challenge links** — `/challenge/[id]` "@you've been called to court. Accept or forfeit." One-click, pre-fills the dispute, wallet-connect to match stake. The invite virus: every case drags in a second person.
 3. **The Arena (public feed)** — live feed of open (take a side), in-session (gavel countdown), and decided (verdict cards) cases. **Zero-friction: no wallet to spectate or hot-take vote.**
 4. **Take-a-side voting** — free "Who's right?" poll (top-of-funnel) + optional stake (conversion) on every open case.
@@ -109,7 +109,7 @@ A no-audience solo builder can't out-audience influencer teams — but can **par
 **Vote week — manufacture spectacle:**
 - **Seed 5–10 cases** before opening (1 serious flagship + several Roast Court). An empty arena converts no one.
 - **Run "Settle The Beef" (the Main Event)** — pre-arrange two semi-known crypto-twitter / 0G-community personalities (or two rival hackathon teams!) to settle a real/staged-genuine dispute live, announced for a set time. Scheduled, watchable, screenshottable.
-- **Challenge the other Top-8 teams** — "Think your dApp's better? Settle it in VERDICT." Drags competitors' audiences into your arena.
+- **Challenge the other Top-8 teams** — "Think your dApp's better? Settle it in DOOMA." Drags competitors' audiences into your arena.
 - **Get one 0G ecosystem amplification** (RT / quest inclusion). Your verifiable demo is exactly their flagship showcase. One official RT > 1,000 cold posts. Ask DevRel early.
 - **Make the voting ask trivial** — pinned post, copy-paste line for Founding Judges, direct link. Don't make supporters hunt.
 
@@ -182,4 +182,4 @@ A no-audience solo builder can't out-audience influencer teams — but can **par
 - 0G Labs Starboard leaderboard: https://www.rzlt.io/infofi/0g-labs-starboard/
 
 ---
-*Concept LOCKED 2026-06-16: VERDICT — a public AI courtroom. Spike GREEN on TEE attestation; centralized-provider caveat understood + honestly framed. Next: clear the 3 OG funding wall + build the guaranteed judge demo (escrow → TEE-attested verdict → auto-payout) and the Verdict Card.*
+*Concept LOCKED 2026-06-16: DOOMA — a public AI courtroom. Spike GREEN on TEE attestation; centralized-provider caveat understood + honestly framed. Next: clear the 3 OG funding wall + build the guaranteed judge demo (escrow → TEE-attested verdict → auto-payout) and the Verdict Card.*

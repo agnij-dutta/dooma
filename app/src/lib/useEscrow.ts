@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * VERDICT — live Escrow client hooks (wagmi v2 + viem).
+ * DOOMA — live Escrow client hooks (wagmi v2 + viem).
  * ---------------------------------------------------------------------------
  * Wires the deployed Escrow (NEXT_PUBLIC_ESCROW_ADDRESS) on 0G Galileo
  * testnet (chain 16602). The off-chain JSON store holds content + votes; this

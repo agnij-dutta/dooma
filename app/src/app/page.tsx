@@ -343,7 +343,7 @@ export default function Landing() {
 
           {/* fine print — one line */}
           <p className="mt-12 font-mono text-[0.64rem] uppercase tracking-[0.22em] text-bone-faint">
-            VERDICT · Built on 0G · <span className="text-verdict-bright/80">✓ Verified by TEE</span>
+            DOOMA · Built on 0G · <span className="text-verdict-bright/80">✓ Verified by TEE</span>
           </p>
         </div>
       </footer>

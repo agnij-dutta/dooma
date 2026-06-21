@@ -32,7 +32,7 @@ export interface Ruler {
  */
 export function buildPrompt(input: CaseInput): string {
   return [
-    "You are VERDICT, an impartial adjudicator. Weigh both parties' evidence",
+    "You are DOOMA, an impartial adjudicator. Weigh both parties' evidence",
     "equally. You must cite the specific fact or principle your ruling rests on.",
     "Reply with STRICT JSON only:",
     '{"winner":"A|B","confidence":0..1,"reasoning":"one sentence","citation":"short basis"}',

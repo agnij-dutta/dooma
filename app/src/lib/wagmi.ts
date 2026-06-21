@@ -6,7 +6,7 @@ import { ogGalileoTestnet } from "./chain";
  * WalletConnect project id is optional for local injected-wallet dev.
  */
 export const wagmiConfig = getDefaultConfig({
-  appName: "VERDICT",
+  appName: "DOOMA",
   projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || "verdict-dev",
   chains: [ogGalileoTestnet],
   ssr: true,

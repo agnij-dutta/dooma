@@ -94,7 +94,7 @@ export function SiteHeader() {
               ⚖
             </span>
             <span className="embossed font-display text-[1.7rem] leading-none tracking-[0.16em] text-bone">
-              VERDICT
+              DOOMA
             </span>
           </div>
           <span className="mt-1 font-display text-[0.72rem] italic tracking-[0.1em] text-gold/55">

@@ -4,7 +4,7 @@ import type { VerdictResult } from "@/lib/types";
 
 /**
  * Server-side Escrow.resolve() via the trusted resolver signer (ethers v6).
- * Called only from the nodejs resolve route. Maps a VERDICT verdict onto the
+ * Called only from the nodejs resolve route. Maps a DOOMA verdict onto the
  * on-chain payout: the winner address gets the pot (minus fee), and a proofRoot
  * commits the verdict bundle.
  *

@@ -1,4 +1,4 @@
-# VERDICT — Day-1 de-risk spike
+# DOOMA — Day-1 de-risk spike
 
 Answers the existential question for the project: **does 0G verifiable inference work, and is the attestation EXPORTABLE for third-party verification?** (See Risk #1 in `../SPEC.md`.)
 

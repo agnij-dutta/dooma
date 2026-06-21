@@ -1,4 +1,4 @@
-# Deploying VERDICT's Escrow
+# Deploying DOOMA's Escrow
 
 ## Live deployment (0G Galileo testnet · chain 16602)
 

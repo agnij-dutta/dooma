@@ -1,24 +1,24 @@
-# VERDICT — Brand Bible
+# DOOMA — Brand Bible
 
 > *Night Court.* A crypto-native tribunal where an incorruptible machine settles human beef in public — and hands you the receipt.
 
-This document is the source of truth for VERDICT's voice, story, and on-screen words. Designers build to it. The community quotes it. Every line here is meant to be pasted straight into the UI.
+This document is the source of truth for DOOMA's voice, story, and on-screen words. Designers build to it. The community quotes it. Every line here is meant to be pasted straight into the UI.
 
 ---
 
 ## 1. The Brand World & Premise
 
-It's always midnight at VERDICT. The room is dark and warm as old ink, lit by a single spotlight on the bench. Two people walk in with a grievance — a bet, a debt, a "he said / she said" that's been festering — and they put their money where their mouth is: real funds, locked in escrow on 0G Chain, before a word is spoken. The crowd files into the gallery to take sides. Then the gavel drops. The judge isn't a person who can be flattered, paid off, or worn down. It's a machine sealed inside a cryptographically attested enclave — and when it rules, the escrow pays the winner automatically. No appeal to the management. No "the refs were bought." The court is the contract.
+It's always midnight at DOOMA. The room is dark and warm as old ink, lit by a single spotlight on the bench. Two people walk in with a grievance — a bet, a debt, a "he said / she said" that's been festering — and they put their money where their mouth is: real funds, locked in escrow on 0G Chain, before a word is spoken. The crowd files into the gallery to take sides. Then the gavel drops. The judge isn't a person who can be flattered, paid off, or worn down. It's a machine sealed inside a cryptographically attested enclave — and when it rules, the escrow pays the winner automatically. No appeal to the management. No "the refs were bought." The court is the contract.
 
-What makes VERDICT a *place* and not just a feature is that it's adversarial, public, and final — by design. Most of the internet argues forever because nothing is ever settled. Here, arguments **end**. Someone wins, someone loses, the money moves, and a verdict card is minted with a wax seal that reads "Verified by TEE." That card is the trophy and the receipt at once: schadenfreude for the gallery, vindication for the winner, and a provenance trail for the skeptic. VERDICT turns the oldest human ritual — taking your fight before a judge — into something a crypto-savvy crowd can actually trust, because the one thing they hate most is being told to trust.
+What makes DOOMA a *place* and not just a feature is that it's adversarial, public, and final — by design. Most of the internet argues forever because nothing is ever settled. Here, arguments **end**. Someone wins, someone loses, the money moves, and a verdict card is minted with a wax seal that reads "Verified by TEE." That card is the trophy and the receipt at once: schadenfreude for the gallery, vindication for the winner, and a provenance trail for the skeptic. DOOMA turns the oldest human ritual — taking your fight before a judge — into something a crypto-savvy crowd can actually trust, because the one thing they hate most is being told to trust.
 
-And that's the spine of the whole world: **don't trust us — audit the court.** VERDICT never asks for faith. The judge's credentials are clickable. The proof is exportable. The honesty is the swagger. It's a tribunal that hands you the keys to the evidence room on your way out and dares you to find the rig. You won't — because there isn't one. That confidence, theatrical but earned, is the personality a designer can dress and a community can rally behind.
+And that's the spine of the whole world: **don't trust us — audit the court.** DOOMA never asks for faith. The judge's credentials are clickable. The proof is exportable. The honesty is the swagger. It's a tribunal that hands you the keys to the evidence room on your way out and dares you to find the rig. You won't — because there isn't one. That confidence, theatrical but earned, is the personality a designer can dress and a community can rally behind.
 
 ---
 
 ## 2. Voice & Tone
 
-VERDICT speaks like a judge who's seen everything and is mildly amused by all of it. Confident, theatrical, precise. Gravitas with a raised eyebrow. It is never breathless, never salesy, and it never begs to be believed — it shows its work and lets you check.
+DOOMA speaks like a judge who's seen everything and is mildly amused by all of it. Confident, theatrical, precise. Gravitas with a raised eyebrow. It is never breathless, never salesy, and it never begs to be believed — it shows its work and lets you check.
 
 **Six principles, with do / don't:**
 
@@ -44,7 +44,7 @@ VERDICT speaks like a judge who's seen everything and is mildly amused by all of
 
 **6. Kill the web3 slop.** Banned forever: revolutionizing, trustless future, next-gen, game-changing, disrupting, seamless, unlock, empower, leverage, paradigm. We sound like a court, not a pitch deck.
 - ✅ "Settle it on-chain."
-- ❌ "VERDICT is revolutionizing trustless dispute resolution for the next-gen web."
+- ❌ "DOOMA is revolutionizing trustless dispute resolution for the next-gen web."
 
 ---
 
@@ -52,7 +52,7 @@ VERDICT speaks like a judge who's seen everything and is mildly amused by all of
 
 **Primary tagline:**
 > ## Settle it on-chain.
-*(The name is also the verb. "We took it to VERDICT." "Settle it.")*
+*(The name is also the verb. "We took it to DOOMA." "Settle it.")*
 
 **The hero line (long-form, for the manifesto slot):**
 > Two people. One AI judge that can't be bribed. The money's already locked. Pick a side before the gavel drops.
@@ -220,10 +220,10 @@ The line the community repeats — the meme, the positioning, the thing in someo
 > ## "It's an AI judge that can't be bribed — and you can check the receipt."
 
 **Shorter, for replies and bios:**
-> **VERDICT: settle it on-chain. The judge owes no one.**
+> **DOOMA: settle it on-chain. The judge owes no one.**
 
 **The dare, for when someone's losing an argument online:**
-> **"Settle it on VERDICT."**
+> **"Settle it on DOOMA."**
 
 ---
 

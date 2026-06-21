@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 /* ============================================================================
-   VERDICT — "NIGHT COURT" component kit
+   DOOMA — "NIGHT COURT" component kit
    Presentational primitives built on globals.css tokens + utilities.
    ========================================================================== */
 

@@ -1,4 +1,4 @@
-# VERDICT — Day-1 spike findings (2026-06-16)
+# DOOMA — Day-1 spike findings (2026-06-16)
 
 Ran against 0G Galileo testnet (chain 16602) with a throwaway funded wallet (0.1 OG).
 SDK: `@0gfoundation/0g-compute-ts-sdk@0.8.4` (latest stable; `0.9.0-beta.0` exists).

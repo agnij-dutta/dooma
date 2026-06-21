@@ -1,4 +1,4 @@
-# VERDICT — app
+# DOOMA — app
 
 A public AI courtroom on **0G**. Two parties stake into escrow, the crowd takes
 a side, an AI judge served by a **cryptographically verified TEE** drops the

@@ -12,6 +12,13 @@ import type { Case } from "./types";
 
 const DATA_DIR = path.join(process.cwd(), "data");
 const STORE_PATH = path.join(DATA_DIR, "cases.json");
+// Vercel serverless has a read-only FS except /tmp — fall back there so writes
+// never crash. (Cross-instance persistence isn't guaranteed on serverless; for
+// that, swap this for Vercel KV / Postgres. Fine for the demo.)
+const TMP_PATH = path.join("/tmp", "verdict-cases.json");
+
+// Module-level cache: source of truth within a warm instance, seeded on first read.
+let cache: Case[] | null = null;
 
 const SEED: Case[] = [
   {
@@ -77,29 +84,37 @@ const SEED: Case[] = [
   },
 ];
 
-function ensure(): void {
-  if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-  if (!fs.existsSync(STORE_PATH)) {
-    fs.writeFileSync(STORE_PATH, JSON.stringify(SEED, null, 2));
+function tryReadFile(p: string): Case[] | null {
+  try {
+    if (fs.existsSync(p)) return JSON.parse(fs.readFileSync(p, "utf8")) as Case[];
+  } catch {
+    /* unreadable — fall through */
   }
+  return null;
 }
 
 function readAll(): Case[] {
-  ensure();
-  try {
-    return JSON.parse(fs.readFileSync(STORE_PATH, "utf8")) as Case[];
-  } catch {
-    return [...SEED];
-  }
+  if (cache) return cache;
+  cache = tryReadFile(STORE_PATH) ?? tryReadFile(TMP_PATH) ?? SEED.map((c) => ({ ...c }));
+  return cache;
 }
 
 function writeAll(cases: Case[]): void {
-  ensure();
-  fs.writeFileSync(STORE_PATH, JSON.stringify(cases, null, 2));
+  cache = cases; // always update the in-memory source of truth first
+  // best-effort persistence — never throw on a read-only FS
+  for (const p of [STORE_PATH, TMP_PATH]) {
+    try {
+      fs.mkdirSync(path.dirname(p), { recursive: true });
+      fs.writeFileSync(p, JSON.stringify(cases, null, 2));
+      return;
+    } catch {
+      /* read-only (e.g. bundled path on Vercel) — try the next location */
+    }
+  }
 }
 
 export function listCases(): Case[] {
-  return readAll().sort((a, b) => b.createdAt - a.createdAt);
+  return [...readAll()].sort((a, b) => b.createdAt - a.createdAt);
 }
 
 export function getCase(id: string): Case | undefined {

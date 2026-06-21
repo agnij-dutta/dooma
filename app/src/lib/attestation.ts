@@ -1,4 +1,5 @@
 import "server-only";
+import os from "node:os";
 import { ethers } from "ethers";
 import { createZGComputeNetworkBroker } from "@0gfoundation/0g-compute-ts-sdk";
 import type { AttestationSummary } from "./types";
@@ -40,10 +41,15 @@ export async function fetchAttestation(provider: string): Promise<AttestationSum
   const wallet = getWallet();
   const broker = await createZGComputeNetworkBroker(wallet as ethers.Wallet);
 
+  // verifyService writes an attestation report to disk — point it at the OS temp
+  // dir so it works on read-only serverless filesystems (Vercel). Locally that's
+  // still writable; on Vercel only /tmp is.
+  const outputDir = os.tmpdir();
+
   // Public RA report URL + full client-side verification (parallel).
   const [raReportURL, verify] = await Promise.all([
     broker.inference.getSignerRaDownloadLink(provider),
-    broker.inference.verifyService(provider),
+    broker.inference.verifyService(provider, outputDir),
   ]);
 
   // verify shape (confirmed live):

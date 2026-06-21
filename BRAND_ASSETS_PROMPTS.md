@@ -42,7 +42,7 @@ the single word "DOOMA" set in an elegant high-contrast editorial serif, wide
 letter-spacing, the letters embossed in brass on deep warm near-black. Beneath,
 a hairline gold rule and a small italic motto "sine favore". Courthouse-masthead
 feel, ceremonial, symmetrical, luxurious. Clean, high-resolution, spelled exactly
-V-E-R-D-I-C-T.
+D-O-O-M-A.
 --ar 16:9 --style raw
 ```
 
